@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'wheat/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative; /* Добавлено для позиционирования кнопок */
+        }
+        .header-buttons {
+            position: absolute; /* Позиционируем кнопки в верхнем углу */
+            top: 15px;
+            right: 15px;
+        }
+        .header-buttons button {
+            background-color: white;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .header-buttons button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .basket-container {
+            padding: 20px;
+        }
+        .product {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .total {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .navigation-buttons {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Корзина</h1>
+    <div class="header-buttons">
+        <button onclick="location.href='{% url 'home' %}'">Главная страница</button>
+        <button onclick="location.href='{% url 'products' %}'">Список продуктов</button>
+    </div>
+</header>
+
+<div class="basket-container">
+    <div class="navigation-buttons">
+
+    </div>
+
+    {% if basket_products %}
+        {% for item in basket_products %}
+        <div class="product">
+            <h2>{{ item.product.product_name }}</h2>
+            <p>Количество: {{ item.quantity }}</p>
+            <p>Цена: {{ item.product.unit_price }} руб.</p>
+            <p>Вес: {{ item.product.weight }} кг</p>
+            <button onclick="removeFromBasket({{ item.product.id }})">Удалить из корзины</button>
+        </div>
+        {% endfor %}
+
+        <div class="total">
+            <p>Общая сумма: {{ total_price }} руб.</p>
+            <p>Общий вес: {{ total_weight }} кг</p>
+        </div>
+
+        <button onclick="location.href='{% url 'create_order' %}'">Оформить заказ</button>
+    {% else %}
+        <p>Ваша корзина пуста.</p>
+    {% endif %}
+</div>
+
+<script>
+function removeFromBasket(productId) {
+    fetch("/wheat/remove_from_basket/" + productId + "/", {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            location.reload(); // Перезагрузить страницу после удаления товара
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+
+</body>
+</html>

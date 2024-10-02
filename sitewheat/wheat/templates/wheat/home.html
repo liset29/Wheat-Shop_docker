@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheat Store</title>
+    <link rel="stylesheet" href="{% static 'wheat/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <h1><a href="{% url 'home' %}">Wheat Store</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'products' %}">Продукты</a></li>
+                    <li><a href="{% url 'basket' %}">Корзина</a></li>
+                    <li><a href="{% url 'orders' %}">Заказы</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}">Войти</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2>Добро пожаловать в магазин зерновых культур!</h2>
+            <p>Просматривайте наши продукты и добавляйте их в корзину.</p>
+            <a href="{% url 'products' %}" class="btn">Перейти к продуктам</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Wheat Store. Все права защищены.</p>
+    </footer>
+</body>
+</html>

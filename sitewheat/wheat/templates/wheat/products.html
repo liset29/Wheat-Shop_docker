@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список продуктов</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'wheat/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .product {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            width: 200px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .product h2 {
+            font-size: 20px;
+        }
+        .product p {
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Список продуктов</h1>
+    <nav>
+        {% if user.is_authenticated %}
+            <a href="{% url 'users:logout' %}" style="color: white; margin-right: 20px;">Выйти</a>
+        {% else %}
+            <a href="{% url 'users:login' %}" style="color: white; margin-right: 20px;">войти</a>
+        {% endif %}
+        <a href="{% url 'basket' %}" style="color: white;">Корзина</a>
+    </nav>
+</header>
+
+<div class="product-list">
+    {% for product in product_list %}
+    <div class="product">
+        <h2>{{ product.name }}</h2>
+        <p>Цена: {{ product.unit_price }} руб.</p>
+        <p>Вес: {{ product.weight }} кг</p>
+        <button onclick="addToBasket({{ product.id }})">Добавить в корзину</button>
+    </div>
+    {% endfor %}
+</div>
+
+<<script>
+function addToBasket(productId) {
+    fetch("{% url 'add_to_basket' %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: 'product_id=' + productId
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+        } else if (data.status === 'error' && data.redirect) {
+            // Если пользователь не авторизован, перенаправляем на страницу входа
+            window.location.href = data.redirect;
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+
+
+</body>
+</html>
