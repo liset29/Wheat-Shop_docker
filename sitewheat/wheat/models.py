@@ -46,3 +46,8 @@ class Basket(models.Model):
     products = models.JSONField()
 
 
+
+class Personal(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+
+

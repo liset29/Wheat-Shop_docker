@@ -12,8 +12,11 @@ class Home(TemplateView):
     template_name = 'wheat/home.html'
 
 
+class Secret(TemplateView):
+    template_name = 'wheat/secret_page.html'
 
-
+class Founder(TemplateView):
+    template_name = 'wheat/founder.html'
 
 class ProductsListView(ListView):
     model = Products

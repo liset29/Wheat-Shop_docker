@@ -1,41 +1,93 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wheat Store</title>
-    <link rel="stylesheet" href="{% static 'wheat/styles.css' %}">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .navbar h1 {
+            margin: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        .welcome-message {
+            text-align: center;
+            margin: 50px 0;
+            font-size: 24px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <h1><a href="{% url 'home' %}">Wheat Store</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="{% url 'products' %}">Продукты</a></li>
-                    <li><a href="{% url 'basket' %}">Корзина</a></li>
-                    <li><a href="{% url 'orders' %}">Заказы</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'users:logout' %}">Выйти</a></li>
-                    {% else %}
-                        <li><a href="{% url 'users:login' %}">Войти</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <main>
-        <section>
-            <h2>Добро пожаловать в магазин зерновых культур!</h2>
-            <p>Просматривайте наши продукты и добавляйте их в корзину.</p>
-            <a href="{% url 'products' %}" class="btn">Перейти к продуктам</a>
-        </section>
-    </main>
+<header>
+    <div class="navbar">
+        <h1>Wheat Store</h1>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                {% else %}
+                    <li><a href="{% url 'users:login' %}">Войти</a></li>
+                {% endif %}
+                <li><a href="{% url 'products' %}">Список продуктов</a></li>
+                <li><a href="{% url 'basket' %}">Корзина</a></li>
+                <li><a href="{% url 'orders' %}">Мои заказы</a></li>
+                <li><a href="{% url 'founder' %}">Работники</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-    <footer>
-        <p>&copy; 2024 Wheat Store. Все права защищены.</p>
-    </footer>
+<div class="welcome-message">
+    <h2>Добро пожаловать в Wheat Store!</h2>
+    <p>Покупайте качественные зерновые культуры прямо у нас!</p>
+</div>
+
+<div class="footer">
+    <p>&copy; 2024 Wheat Store. Все права защищены.</p>
+
+</div>
+
 </body>
 </html>

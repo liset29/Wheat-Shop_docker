@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'wheat/styles.css' %}">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
@@ -16,8 +16,9 @@
         header {
             background-color: #4CAF50;
             color: white;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .product-list {
             display: flex;
@@ -27,15 +28,20 @@
         }
         .product {
             border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 15px;
+            border-radius: 8px;
+            padding: 20px;
             margin: 10px;
-            width: 200px;
+            width: 220px;
             background-color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .product:hover {
+            transform: translateY(-5px);
         }
         .product h2 {
-            font-size: 20px;
+            font-size: 18px;
+            margin: 10px 0;
         }
         .product p {
             margin: 5px 0;
@@ -44,12 +50,19 @@
             background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             cursor: pointer;
             border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 100%;
         }
         button:hover {
             background-color: #45a049;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -59,11 +72,11 @@
     <h1>Список продуктов</h1>
     <nav>
         {% if user.is_authenticated %}
-            <a href="{% url 'users:logout' %}" style="color: white; margin-right: 20px;">Выйти</a>
+            <a href="{% url 'users:logout' %}">Выйти</a>
         {% else %}
-            <a href="{% url 'users:login' %}" style="color: white; margin-right: 20px;">войти</a>
+            <a href="{% url 'users:login' %}">Войти</a>
         {% endif %}
-        <a href="{% url 'basket' %}" style="color: white;">Корзина</a>
+        <a href="{% url 'basket' %}">Корзина</a>
     </nav>
 </header>
 
@@ -78,7 +91,7 @@
     {% endfor %}
 </div>
 
-<<script>
+<script>
 function addToBasket(productId) {
     fetch("{% url 'add_to_basket' %}", {
         method: 'POST',
@@ -93,7 +106,6 @@ function addToBasket(productId) {
         if (data.status === 'success') {
             alert(data.message);
         } else if (data.status === 'error' && data.redirect) {
-            // Если пользователь не авторизован, перенаправляем на страницу входа
             window.location.href = data.redirect;
         } else {
             alert(data.message);
@@ -102,7 +114,6 @@ function addToBasket(productId) {
     .catch(error => console.error('Error:', error));
 }
 </script>
-
 
 </body>
 </html>

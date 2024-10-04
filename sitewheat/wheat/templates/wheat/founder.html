@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наши основатели</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'wheat/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .navbar h1 {
+            margin: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        .founders-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .founder {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .founder:hover {
+            transform: translateY(-5px);
+        }
+        .founder img {
+            border-radius: 50%;
+            width: 300px;
+            height: 300px;
+            margin-right: 20px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .founder-1 img {
+            width: auto;
+            height: 400px; /* Устанавливаем фиксированную высоту для лучшего отображения */
+            object-fit: contain; /* Изображение вписывается в контейнер, не обрезая важные части */
+        }
+        .founder-info {
+            text-align: left;
+        }
+        .founder-info h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .founder-info p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        /* Стили для секретной кнопки */
+        .secret-button {
+            display: none; /* Изначально кнопка скрыта */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .secret-button:hover {
+            transform: translateY(-5px);
+        }
+        .reveal-button {
+            color: black; /* Сделаем текст видимым */
+            font-size: 18px; /* Увеличим шрифт для лучшей видимости */
+            cursor: pointer; /* Добавим указатель при наведении */
+            text-decoration: underline; /* Подчеркнем текст, чтобы он выглядел как ссылка */
+        }
+
+        /* Открытие кнопки при наведении на скрытую область */
+        .reveal-button:hover + .secret-button {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="navbar">
+        <h1>Wheat Store</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Главная страница</a></li>
+                <li><a href="{% url 'products' %}">Список продуктов</a></li>
+                <li><a href="{% url 'basket' %}">Корзина</a></li>
+                <li><a href="{% url 'orders' %}">Мои заказы</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="founders-container">
+    <h2>Наши основатели</h2>
+
+    <div class="founder">
+        <img src="https://sun9-22.userapi.com/impg/os9Jc1imr-VdAoBFDYiD2_neCITGXgqhB3wGNw/-5gxwxPBmVE.jpg?size=1167x1466&quality=95&sign=d1fae54de81189c2d0bd85f37f763b95&type=album"
+             alt="Основатель 1">
+        <div class="founder-info">
+            <h2>Главный основатель</h2>
+            <p>Главный основатель компании, лидер с большим видением и опытом в агропромышленности. Холм, на котором он спал, до сих пор остался достопримечательностью и туда стекаются все туристы.</p>
+        </div>
+    </div>
+
+    <div class="founder">
+        <img src="https://sun9-31.userapi.com/impg/0Ca219Otu5MBlXujblhsJz7z01dEer8EqLRslA/Rgcjeen9D1A.jpg?size=1187x1599&quality=95&sign=bb3f8c04fc9d3480d1bc947cce89840b&type=album"
+             alt="Основатель 2">
+        <div class="founder-info">
+            <h2>Второй основатель</h2>
+            <p>Второй основатель компании, всегда в поиске инноваций и улучшений для нашего бизнеса. Когда что-то ломается он первый позвонит секретному боссу или поедет сам за запчастями. Универсален может выполнять множество работы сразу</p>
+        </div>
+    </div>
+    <div class="founder">
+        <img src="https://sun9-63.userapi.com/impg/RutfMcq5q5jyP46agU-ZoGkBdCvBmBqr0-Zfpg/STA6_lTNitE.jpg?size=998x2160&quality=95&sign=a1232caf94df474ea81d56b86496403d&type=album"
+             alt="Основатель 3">
+        <div class="founder-info">
+            <h2>Кидок-помощник</h2>
+            <p>Вовремя улетел в Казань и живёт беззаботной жизнью, иногда приезжает и помогает. На его лице можно увидеть его хитрость и радость этого решения.</p>
+        </div>
+    </div>
+
+    <div class="founder">
+        <img src="https://sun9-66.userapi.com/impg/VKCvPDKWYiiCPUyDY7Zzpga6dCnE7TJeBCUeJA/Y4zBVMxE_EU.jpg?size=1620x2160&quality=95&sign=a6984d01b4a5cd322e9084fe9fe8211b&type=album"
+             alt="Помощница">
+        <div class="founder-info">
+            <h2>Помощница второго основателя - главный повар</h2>
+            <p>Незаменимая помощница, которая поддерживает все процессы компании на должном уровне. Иногда кричит, главное - вовремя уехать и не возвращаться.</p>
+        </div>
+    </div>
+</div>
+
+<!-- "Секретная" область, при наведении на которую показывается кнопка -->
+<a href="{% url 'secret_page' %}">
+    <div class="reveal-button">
+        <p>Наведи сюда, чтобы узнать секрет...</p>
+    </div>
+</a>
+
+<!-- Секретная кнопка, которая ведет на другую страницу -->
+<a href="{% url 'secret_page' %}">
+    <button class="secret-button">Секретная кнопка</button>
+</a>
+
+</body>
+</html>

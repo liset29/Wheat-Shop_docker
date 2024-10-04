@@ -17,7 +17,9 @@ urlpatterns = [
     path('basket/',views.BasketListView.as_view(),name = 'basket'),
     path('orders/',views.OrdersListView.as_view(), name = 'orders'),
     path('remove_from_basket/<int:item_id>/', remove_from_basket, name='remove_from_basket'),
-    path('create_order/', views.AddPage.as_view(), name='create_order')
+    path('create_order/', views.AddPage.as_view(), name='create_order'),
+    path('founder/',views.Founder.as_view(),name = 'founder'),
+    path('secret_page/',views.Secret.as_view(),name = 'secret_page')
 
 
 ]
